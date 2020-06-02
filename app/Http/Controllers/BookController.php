@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Book;
 use Illuminate\Http\Request;
+use Auth;
 
 class BookController extends Controller
 {
@@ -14,7 +15,8 @@ class BookController extends Controller
      */
     public function index()
     {
-        //
+        $books = Book::get();
+        return view('book.index')->with('books', $books);
     }
 
     /**
@@ -35,16 +37,22 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required|max:255',
-            'author' => 'required|max:255'
-        ]);
+        if (Auth::check()) {
+            // The user is logged in...
+            
+            // Validate book fields
+            $request->validate([
+                'title' => 'required|max:255',
+                'author' => 'required|max:255'
+            ]);
 
-        $book = new Book();
-        $book->title = $request['title'];
-        $book->author = $request['author'];
-
-        $book->save();
+            // Create a new Book
+            $book = new Book();
+            $book->title = $request['title'];
+            $book->author = $request['author'];
+            $book->user_id = Auth::id();
+            $book->save();
+        }
         return redirect('home');
     }
 
