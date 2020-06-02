@@ -9,13 +9,12 @@
                     <div class="inline-block">Books</div>
                     <div>
                         <a href="{{ route('home') }}" class="btn btn-secondary">Home</a>
-
+                        <a href="{{ route('mybooks') }}" class="btn btn-secondary">My Books</a>
                     </div>
                 </div>
 
                 <div class="card-body">
                     <books-component :books="{{ $books }}"></books-component>
-
                 </div>
 
             </div>
