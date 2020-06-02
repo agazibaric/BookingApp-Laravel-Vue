@@ -14,10 +14,7 @@
                 </div>
 
                 <div class="card-body">
-                    @foreach ($books as $book)
-                    <h1>{{ $book->title }}</h1>
-                    @endforeach
-                    <example-component></example-component>
+                    <books-component :books="{{ $books }}"></books-component>
 
                 </div>
 
