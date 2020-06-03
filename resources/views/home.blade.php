@@ -20,6 +20,7 @@
                     <div class="d-flex align-items-between">
                         <a class="btn btn-primary w-50" href="{{ route('book.create') }}">Add new book</a>
                         <a class="btn btn-secondary w-50" href="{{ route('book.index') }}">Show books</a>
+
                     </div>
                 </div>
 

@@ -10,12 +10,15 @@
                     <div>
                         <a href="{{ route('home') }}" class="btn btn-secondary">Home</a>
                         <a href="{{ route('mybooks') }}" class="btn btn-secondary">My Books</a>
+                        <a href="{{ route('bookedBooks') }}" class="btn btn-secondary">Booked books</a>
                     </div>
                 </div>
 
                 <div class="card-body">
-                    <books-component :books="{{ $books }}"></books-component>
+                    <books-component :loggeduser="{{ $loggedUser }}" :books="{{ $books }}">
+                    </books-component>
                 </div>
+                <p>{{ $loggedUser }}</p>
 
             </div>
         </div>

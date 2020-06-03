@@ -1,14 +1,14 @@
 <template>
-  <div>
-    <book-component v-for="book in books" :key="book.id" :book="book"></book-component>
+  <div class="row">
+    <div class="card-deck">
+      <book-component v-for="book in books" :key="book.id" :loggeduser="loggeduser" :book="book"></book-component>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["books"],
-  mounted() {
-    console.log("Component mounted.");
-  }
+  props: ["books", "loggeduser", "bookABook"],
+  mounted() {}
 };
 </script>

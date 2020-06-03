@@ -1,14 +1,38 @@
 <template>
   <div>
-    <p>{{ book.title }} by {{ book.author }}</p>
+    <div class="card border-dark mb-3" style="min-width: 16rem; max-width: 16rem;">
+      <div class="card-body">
+        <h5 class="card-title">{{ book.title }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Author: {{ book.author }}</h6>
+        <button v-if="isBookable()" @click="bookABook()" href class="btn btn-success mt-2">Book</button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["book"],
+  props: ["book", "loggeduser"],
   mounted() {
-    console.log("Component mounted.");
+    console.log(this.loggeduser);
+  },
+  methods: {
+    isBookable: function() {
+      return (
+        this.book.user_booked_id === null &&
+        this.loggeduser != this.book.user_id
+      );
+    },
+    bookABook: function() {
+      axios
+        .get("/bookABook/" + this.book.id)
+        .then(function(response) {
+          console.log("Successfull");
+        })
+        .catch(function(error) {
+          console.log("error");
+        });
+    }
   }
 };
 </script>

@@ -17,7 +17,8 @@ class CreateBooksTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('author');
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_booked_id')->nullable()->references('id')->on('users');
             $table->timestamps();
         });
     }

@@ -1914,10 +1914,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["book"],
+  props: ["book", "loggeduser"],
   mounted: function mounted() {
-    console.log("Component mounted.");
+    console.log(this.loggeduser);
+  },
+  methods: {
+    isBookable: function isBookable() {
+      return this.book.user_booked_id === null && this.loggeduser != this.book.user_id;
+    },
+    bookABook: function bookABook() {
+      axios.get("/bookABook/" + this.book.id).then(function (response) {
+        console.log("Successfull");
+      })["catch"](function (error) {
+        console.log("error");
+      });
+    }
   }
 });
 
@@ -1938,11 +1956,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["books"],
-  mounted: function mounted() {
-    console.log("Component mounted.");
-  }
+  props: ["books", "loggeduser", "bookABook"],
+  mounted: function mounted() {}
 });
 
 /***/ }),
@@ -37491,7 +37509,40 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("p", [_vm._v(_vm._s(_vm.book.title) + " by " + _vm._s(_vm.book.author))])
+    _c(
+      "div",
+      {
+        staticClass: "card border-dark mb-3",
+        staticStyle: { "min-width": "16rem", "max-width": "16rem" }
+      },
+      [
+        _c("div", { staticClass: "card-body" }, [
+          _c("h5", { staticClass: "card-title" }, [
+            _vm._v(_vm._s(_vm.book.title))
+          ]),
+          _vm._v(" "),
+          _c("h6", { staticClass: "card-subtitle mb-2 text-muted" }, [
+            _vm._v("Author: " + _vm._s(_vm.book.author))
+          ]),
+          _vm._v(" "),
+          _vm.isBookable()
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn btn-success mt-2",
+                  attrs: { href: "" },
+                  on: {
+                    click: function($event) {
+                      return _vm.bookABook()
+                    }
+                  }
+                },
+                [_vm._v("Book")]
+              )
+            : _vm._e()
+        ])
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -37516,13 +37567,19 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    _vm._l(_vm.books, function(book) {
-      return _c("book-component", { key: book.id, attrs: { book: book } })
-    }),
-    1
-  )
+  return _c("div", { staticClass: "row" }, [
+    _c(
+      "div",
+      { staticClass: "card-deck" },
+      _vm._l(_vm.books, function(book) {
+        return _c("book-component", {
+          key: book.id,
+          attrs: { loggeduser: _vm.loggeduser, book: book }
+        })
+      }),
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
