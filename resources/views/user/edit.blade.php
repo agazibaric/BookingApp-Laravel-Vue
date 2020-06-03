@@ -6,33 +6,31 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header d-flex align-items-center justify-content-between">
-                    <div class="inline-block">Add new book</div>
+                    <div class="inline-block">Edit user settings</div>
                     <div>
-                        <a href="{{ route('home') }}" class="btn btn-secondary">Home</a>
-
+                        <a href="{{ route('changePassword') }}" class="btn btn-danger">Change password</a>
                     </div>
                 </div>
 
-                <div class="card-body">
-
-                    <form action="{{ route('book.store') }}" method="POST">
+                <div class="card-body mb-5">
+                    <form action="{{ route('updateUser') }}" method="POST">
                         @csrf
                         <div class="form-group mt-4">
-                            <label for="book">Title</label>
-                            <input type="text" class="form-control" name="title">
-                            @error('title')
+                            <label for="book">Name</label>
+                            <input type="text" class="form-control" name="name" value="{{ $user->name }}">
+                            @error('name')
                             <div class="error text-danger">{{ $message }}</div>
                             @enderror
 
-                            <label for="book">Author</label>
-                            <input type="text" class="form-control" name="author">
-                            @error('author')
+                            <label for="book">Email</label>
+                            <input type="text" class="form-control" name="email" value="{{ $user->email }}">
+                            @error('email')
                             <div class="error text-danger">{{ $message }}</div>
                             @enderror
+
                         </div>
-                        <button type="submit" class="btn btn-primary">Create new book</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
-
                 </div>
 
             </div>

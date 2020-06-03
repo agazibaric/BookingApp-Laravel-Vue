@@ -10,39 +10,28 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
+     /**
+     * Show the form for editing the user.
      *
+     * @param  \App\User  $book
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function edit()
     {
         if (Auth::check()) {
-            $userBooks = DB::table('books')->where('user_id', Auth::id())->get();
-            return view('user.index')->with('userBooks', $userBooks);
+            $user = Auth::user();
+            return view('user.edit')->with('user', $user);
         }
     }
 
-    /**
-     * 
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function bookedBooks() {
-        if (Auth::check()) {
-            $bookedBooks = DB::table('books')->where('user_booked_id', Auth::id())->get();
-            return view('user.bookedBooks')->with('bookedBooks', $bookedBooks);
-        }
+    public function update($request)
+    {
+        
     }
 
-    public function bookABook($bookId) {
-        print("Hello World");
-        if (Auth::check()) {
-            DB::table('books')
-              ->where('id', $bookId)
-              ->update(['user_booked_id' => Auth::id()]);
-            
-        }
+    public function changePassword($request)
+    {
+        
     }
 
 

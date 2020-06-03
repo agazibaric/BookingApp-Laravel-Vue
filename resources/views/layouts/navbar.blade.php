@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
             BOOKS BOOKING
@@ -11,7 +11,24 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-
+                <li class="nav-item">
+                    <a href="{{ route('home') }}" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('book.index') }}" class="nav-link">All books</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('mybooks') }}" class="nav-link">My books</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('bookedBooks') }}" class="nav-link">Booked books</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('available') }}" class="nav-link">Available books</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('book.create') }}" class="nav-link">Add new book</a>
+                </li>
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -34,6 +51,13 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
+                        <!-- Edit user settings -->
+                        <a class="dropdown-item" href="{{ route('usersettings') }}">
+                            User settings
+                        </a>
+
+                        <!-- Logout -->
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
@@ -42,6 +66,7 @@
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
+
                     </div>
                 </li>
                 @endguest

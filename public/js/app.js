@@ -1927,11 +1927,16 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     isBookable: function isBookable() {
+      // User can book the book if it's not his book
+      // and if it's not booked by someone else
       return this.book.user_booked_id === null && this.loggeduser != this.book.user_id;
     },
     bookABook: function bookABook() {
+      // Logged user will book a this.book
       axios.get("/bookABook/" + this.book.id).then(function (response) {
-        console.log("Successfull");
+        console.log("Successfull"); // Redirect to all booked books
+
+        window.location.href = "/bookedBooks";
       })["catch"](function (error) {
         console.log("error");
       });
@@ -37570,7 +37575,7 @@ var render = function() {
   return _c("div", { staticClass: "row" }, [
     _c(
       "div",
-      { staticClass: "card-deck" },
+      { staticClass: "card-deck justify-content-center" },
       _vm._l(_vm.books, function(book) {
         return _c("book-component", {
           key: book.id,

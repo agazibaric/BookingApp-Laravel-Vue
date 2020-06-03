@@ -18,16 +18,21 @@ export default {
   },
   methods: {
     isBookable: function() {
+      // User can book the book if it's not his book
+      // and if it's not booked by someone else
       return (
         this.book.user_booked_id === null &&
         this.loggeduser != this.book.user_id
       );
     },
     bookABook: function() {
+      // Logged user will book a this.book
       axios
         .get("/bookABook/" + this.book.id)
         .then(function(response) {
           console.log("Successfull");
+          // Redirect to all booked books
+          window.location.href = "/bookedBooks";
         })
         .catch(function(error) {
           console.log("error");

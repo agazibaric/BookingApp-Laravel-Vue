@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="card-deck">
+    <div class="card-deck justify-content-center">
       <book-component v-for="book in books" :key="book.id" :loggeduser="loggeduser" :book="book"></book-component>
     </div>
   </div>

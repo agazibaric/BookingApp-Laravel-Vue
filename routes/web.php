@@ -14,13 +14,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('book', 'BookController');
-Route::get('/mybooks', 'UserController@index')->name('mybooks');
-Route::get('/bookedBooks', 'UserController@bookedBooks')->name('bookedBooks');
-Route::get('/bookABook/{bookId}', 'UserController@bookABook')->name('bookABook');
+Route::get('/mybooks', 'BookController@mybooks')->name('mybooks');
+Route::get('/bookedBooks', 'BookController@bookedBooks')->name('bookedBooks');
+Route::get('/bookABook/{bookId}', 'BookController@bookABook')->name('bookABook');
+Route::get('/available', 'BookController@available')->name('available');
+Route::get('/usersettings', 'UserController@edit')->name('usersettings');
+Route::get('/updateUser', 'UserController@update')->name('updateUser');
+Route::get('/changePassword', 'UserController@changePassword')->name('changePassword');

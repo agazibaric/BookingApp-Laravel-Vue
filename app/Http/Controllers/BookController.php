@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Book;
 use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Support\Facades\DB;
 
 class BookController extends Controller
 {
@@ -17,7 +18,10 @@ class BookController extends Controller
     {
         $books = Book::get();
         $loggedUser = Auth::id();
-        return view('book.index')->with('books', $books)->with('loggedUser', $loggedUser);
+        return view('book.index')
+        ->with('books', $books)
+        ->with('loggedUser', $loggedUser)
+        ->with('title', 'All books');;
     }
 
     /**
@@ -100,5 +104,73 @@ class BookController extends Controller
     public function destroy(Book $book)
     {
         //
+    }
+
+     /**
+     * Display a listing of the available books.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function available()
+    {
+        if (Auth::check()) {
+            $loggedUser = Auth::id();
+
+            // Get all books that logged user can book
+            $books = DB::table('books')
+            ->whereNull('user_booked_id')
+            ->whereNotIn('user_id', [$loggedUser])->get();
+            
+            return view('book.index')
+            ->with('books', $books)
+            ->with('loggedUser', $loggedUser)
+            ->with('title', 'Available books');;
+        }
+    }
+
+    /**
+     * Display a listing of the user's books.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function myBooks()
+    {
+        if (Auth::check()) {
+            // Get all books that belongs to the logged user
+            $loggedUser = Auth::id();
+            $userBooks = DB::table('books')->where('user_id', Auth::id())->get();
+            return view('book.index')
+            ->with('books', $userBooks)
+            ->with('loggedUser', $loggedUser)
+            ->with('title', 'My books');;
+        }
+    }
+
+    /**
+     * Display a listing of the booked books by logged user
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function bookedBooks() {
+        if (Auth::check()) {
+            // Get all books that are booked by the logged user
+            $loggedUser = Auth::id();
+            $bookedBooks = DB::table('books')->where('user_booked_id', Auth::id())->get();
+            return view('book.index')
+            ->with('books', $bookedBooks)
+            ->with('loggedUser', $loggedUser)
+            ->with('title', 'Booked books');
+        }
+    }
+
+    /**
+     * For booking a book call this method with bookID as parameter.
+     */
+    public function bookABook($bookId) {
+        if (Auth::check()) {
+            DB::table('books')
+              ->where('id', $bookId)
+              ->update(['user_booked_id' => Auth::id()]);
+        }
     }
 }

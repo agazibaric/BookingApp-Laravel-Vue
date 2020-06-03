@@ -4,21 +4,15 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card border-dark">
                 <div class="card-header d-flex align-items-center justify-content-between">
-                    <div class="inline-block">Books</div>
-                    <div>
-                        <a href="{{ route('home') }}" class="btn btn-secondary">Home</a>
-                        <a href="{{ route('mybooks') }}" class="btn btn-secondary">My Books</a>
-                        <a href="{{ route('bookedBooks') }}" class="btn btn-secondary">Booked books</a>
-                    </div>
+                    <div class="inline-block">{{ $title }}</div>
                 </div>
 
                 <div class="card-body">
                     <books-component :loggeduser="{{ $loggedUser }}" :books="{{ $books }}">
                     </books-component>
                 </div>
-                <p>{{ $loggedUser }}</p>
 
             </div>
         </div>
