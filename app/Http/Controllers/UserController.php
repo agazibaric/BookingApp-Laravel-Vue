@@ -7,6 +7,7 @@ use App\Book;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -24,15 +25,76 @@ class UserController extends Controller
         }
     }
 
-    public function update($request)
+    public function update(Request $request)
     {
-        
+        if (Auth::check()) {
+            $userId = Auth::id();
+
+            // Validate user fields
+            $request->validate([
+                'name' => 'required|max:255',
+                'email' => 'email:rfc'
+            ]);
+
+            // Update user
+            DB::table('users')
+              ->where('id', $userId)
+              ->update([
+                  'name' => $request['name'],
+                  'email' => $request['email']
+              ]);
+        }
+        return redirect('home');
     }
 
-    public function changePassword($request)
+    public function editPassword()
     {
-        
+        return view('user.editpassword');
     }
+
+    public function updatePassword(Request $request) {
+        if(Auth::Check()) {
+            $request->validate([
+                'old_password'     => 'required',
+                'new_password'     => 'required|min:8',
+                'confirm_password' => 'required|same:new_password',
+            ]);
+
+            $current_password = Auth::User()->password;           
+            if(Hash::check($request['old_password'], $current_password)) {           
+                $userId = Auth::User()->id;                       
+
+                // Update user
+                DB::table('users')
+                ->where('id', $userId)
+                ->update([
+                    'password' => Hash::make($request['new_password']),
+                ]);
+                return redirect('home');
+            } else {           
+                $error = array('old_password' => 'Please enter correct current password');
+                return response()->json(array('error' => $error), 400);   
+            }        
+        }
+        else {
+            return redirect()->to('/');
+        }
+    }
+
+    public function admin_credential_rules(array $data) {
+        $messages = [
+            'currentPassword.required' => 'Please enter current password',
+            'newPassword.required' => 'Please enter password',
+        ];
+
+        $validator = Validator::make($data, [
+            'currentPassword' => 'required',
+            'newPassword' => 'required|same:newPassword',
+            'rePassword' => 'required|same:newPassword',     
+        ], $messages);
+
+        return $validator;
+    }  
 
 
 }

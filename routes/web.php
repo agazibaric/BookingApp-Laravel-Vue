@@ -26,5 +26,6 @@ Route::get('/bookedBooks', 'BookController@bookedBooks')->name('bookedBooks');
 Route::get('/bookABook/{bookId}', 'BookController@bookABook')->name('bookABook');
 Route::get('/available', 'BookController@available')->name('available');
 Route::get('/usersettings', 'UserController@edit')->name('usersettings');
-Route::get('/updateUser', 'UserController@update')->name('updateUser');
-Route::get('/changePassword', 'UserController@changePassword')->name('changePassword');
+Route::post('/updateUser', 'UserController@update')->name('updateUser');
+Route::get('/editPassword', 'UserController@editPassword')->name('editPassword');
+Route::post('/updatePassword', 'UserController@updatePassword')->name('updatePassword');

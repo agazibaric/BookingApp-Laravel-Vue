@@ -8,7 +8,7 @@
                 <div class="card-header d-flex align-items-center justify-content-between">
                     <div class="inline-block">Edit user settings</div>
                     <div>
-                        <a href="{{ route('changePassword') }}" class="btn btn-danger">Change password</a>
+                        <a href="{{ route('editPassword') }}" class="btn btn-danger">Change password</a>
                     </div>
                 </div>
 
