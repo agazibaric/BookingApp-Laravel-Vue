@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  props: ["books", "loggeduser", "bookABook"],
+  props: ["books", "loggeduser"],
   mounted() {}
 };
 </script>

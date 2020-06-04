@@ -8,7 +8,7 @@
                 <div class="card-header d-flex align-items-center justify-content-between">
                     <div class="inline-block">Add new book</div>
                     <div>
-                        <a href="{{ route('home') }}" class="btn btn-secondary">Home</a>
+                        <a href="{{ route('book.index') }}" class="btn btn-secondary">Home</a>
 
                     </div>
                 </div>
