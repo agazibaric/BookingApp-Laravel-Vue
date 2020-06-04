@@ -1920,25 +1920,53 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["book", "loggeduser"],
-  mounted: function mounted() {
-    console.log(this.loggeduser);
+  data: function data() {
+    return {
+      // Copy props book data to bookData
+      bookData: Vue.util.extend({}, this.book)
+    };
   },
+  mounted: function mounted() {},
   methods: {
     isBookable: function isBookable() {
       // User can book the book if it's not his book
       // and if it's not booked by someone else
-      return this.book.user_booked_id === null && this.loggeduser != this.book.user_id;
+      return this.bookData.user_booked_id === null && this.loggeduser != this.bookData.user_id;
+    },
+    isBookedByMe: function isBookedByMe() {
+      // Returns true if this book is booked by logged user
+      return this.bookData.user_booked_id == this.loggeduser;
+    },
+    isMyBook: function isMyBook() {
+      // Returns true if this is logged user's book
+      return this.bookData.user_id == this.loggeduser;
     },
     bookABook: function bookABook() {
-      // Logged user will book a this.book
-      axios.get("/bookABook/" + this.book.id).then(function (response) {
-        console.log("Successfull"); // Redirect to all booked books
+      var _this = this;
 
-        window.location.href = "/bookedBooks";
+      // Logged user will book the this.book
+      axios.get("/bookABook/" + this.book.id).then(function (response) {
+        // User booked the book successfully
+        // Assign user to bookData
+        _this.bookData.user_booked_id = _this.loggeduser;
       })["catch"](function (error) {
-        console.log("error");
+        console.log(error);
+      });
+    },
+    returnABook: function returnABook() {
+      var _this2 = this;
+
+      // User returns book that he have booked
+      axios.get("/returnABook/" + this.book.id).then(function (response) {
+        // User returned the book successfully
+        // Set booked user of the book to null
+        _this2.bookData.user_booked_id = null;
+      })["catch"](function (error) {
+        console.log(error);
       });
     }
   }
@@ -37544,6 +37572,28 @@ var render = function() {
                 },
                 [_vm._v("Book")]
               )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.isBookedByMe()
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn btn-danger mt-2",
+                  attrs: { href: "" },
+                  on: {
+                    click: function($event) {
+                      return _vm.returnABook()
+                    }
+                  }
+                },
+                [_vm._v("Return")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.isMyBook()
+            ? _c("p", { staticClass: "text-info" }, [
+                _vm._v("This is your book")
+              ])
             : _vm._e()
         ])
       ]
@@ -37575,7 +37625,7 @@ var render = function() {
   return _c("div", { staticClass: "row" }, [
     _c(
       "div",
-      { staticClass: "card-deck justify-content-center" },
+      { staticClass: "card-deck justify-content-center mx-auto" },
       _vm._l(_vm.books, function(book) {
         return _c("book-component", {
           key: book.id,

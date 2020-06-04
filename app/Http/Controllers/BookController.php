@@ -16,12 +16,15 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::get();
-        $loggedUser = Auth::id();
-        return view('book.index')
-        ->with('books', $books)
-        ->with('loggedUser', $loggedUser)
-        ->with('title', 'All books');;
+        if (Auth::check()) {
+            $books = Book::get();
+            $loggedUser = Auth::id();
+            return view('book.index')
+            ->with('books', $books)
+            ->with('loggedUser', $loggedUser)
+            ->with('title', 'All books');;
+        }
+        return redirect('home');
     }
 
     /**
@@ -31,7 +34,10 @@ class BookController extends Controller
      */
     public function create()
     {
-        return view('book.create');
+        if (Auth::check()) {
+            return view('book.create');
+        }
+        return redirect('home');
     }
 
     /**
@@ -126,6 +132,7 @@ class BookController extends Controller
             ->with('loggedUser', $loggedUser)
             ->with('title', 'Available books');;
         }
+        return redirect('home');
     }
 
     /**
@@ -144,6 +151,7 @@ class BookController extends Controller
             ->with('loggedUser', $loggedUser)
             ->with('title', 'My books');;
         }
+        return redirect('home');
     }
 
     /**
@@ -161,6 +169,7 @@ class BookController extends Controller
             ->with('loggedUser', $loggedUser)
             ->with('title', 'Booked books');
         }
+        return redirect('home');
     }
 
     /**
@@ -172,5 +181,19 @@ class BookController extends Controller
               ->where('id', $bookId)
               ->update(['user_booked_id' => Auth::id()]);
         }
+        return redirect('home');
+    }
+
+    /**
+     * For returning a book that logged user have booked.
+     */
+    public function returnABook($bookId) {
+        // Find book with given id and set user that booked it to null
+        if (Auth::check()) {
+            DB::table('books')
+              ->where('id', $bookId)
+              ->update(['user_booked_id' => null]);
+        }
+        return redirect('home');
     }
 }

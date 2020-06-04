@@ -59,26 +59,25 @@ class UserController extends Controller
                 'new_password'     => 'required|min:8',
                 'confirm_password' => 'required|same:new_password',
             ]);
-
+            
+            // Check if user entered correct current password
             $current_password = Auth::User()->password;           
-            if(Hash::check($request['old_password'], $current_password)) {           
+            if(Hash::check($request['old_password'], $current_password)) {        
                 $userId = Auth::User()->id;                       
 
-                // Update user
+                // Update user password
                 DB::table('users')
                 ->where('id', $userId)
                 ->update([
                     'password' => Hash::make($request['new_password']),
                 ]);
                 return redirect('home');
-            } else {           
-                $error = array('old_password' => 'Please enter correct current password');
-                return response()->json(array('error' => $error), 400);   
-            }        
+            }
+
+            // If hashes don't match, user entered wrong current password
+            return back()->with('error', 'You entered wrong current password'); 
         }
-        else {
-            return redirect()->to('/');
-        }
+        return redirect('home');
     }
 
     public function admin_credential_rules(array $data) {

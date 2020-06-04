@@ -20,11 +20,16 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// Book
 Route::resource('book', 'BookController');
 Route::get('/mybooks', 'BookController@mybooks')->name('mybooks');
 Route::get('/bookedBooks', 'BookController@bookedBooks')->name('bookedBooks');
 Route::get('/bookABook/{bookId}', 'BookController@bookABook')->name('bookABook');
+Route::get('/returnABook/{bookId}', 'BookController@returnABook')->name('returnABook');
 Route::get('/available', 'BookController@available')->name('available');
+
+// User
 Route::get('/usersettings', 'UserController@edit')->name('usersettings');
 Route::post('/updateUser', 'UserController@update')->name('updateUser');
 Route::get('/editPassword', 'UserController@editPassword')->name('editPassword');
