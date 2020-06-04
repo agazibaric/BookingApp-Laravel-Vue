@@ -1991,6 +1991,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["books", "loggeduser", "bookABook"],
   mounted: function mounted() {}
@@ -37626,13 +37627,17 @@ var render = function() {
     _c(
       "div",
       { staticClass: "card-deck justify-content-center mx-auto" },
-      _vm._l(_vm.books, function(book) {
-        return _c("book-component", {
-          key: book.id,
-          attrs: { loggeduser: _vm.loggeduser, book: book }
-        })
-      }),
-      1
+      [
+        _vm._l(_vm.books, function(book) {
+          return _c("book-component", {
+            key: book.id,
+            attrs: { loggeduser: _vm.loggeduser, book: book }
+          })
+        }),
+        _vm._v(" "),
+        _vm.books.length == 0 ? _c("h3", [_vm._v("No results")]) : _vm._e()
+      ],
+      2
     )
   ])
 }
