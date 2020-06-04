@@ -24,7 +24,7 @@ class BookController extends Controller
             ->with('loggedUser', $loggedUser)
             ->with('title', 'All books');;
         }
-        return redirect('home');
+        return redirect('login');
     }
 
     /**
@@ -37,7 +37,7 @@ class BookController extends Controller
         if (Auth::check()) {
             return view('book.create');
         }
-        return redirect('home');
+        return redirect('login');
     }
 
     /**
@@ -64,7 +64,7 @@ class BookController extends Controller
             $book->user_id = Auth::id();
             $book->save();
         }
-        return redirect('home');
+        return redirect('login');
     }
 
     /**
@@ -132,7 +132,7 @@ class BookController extends Controller
             ->with('loggedUser', $loggedUser)
             ->with('title', 'Available books');;
         }
-        return redirect('home');
+        return redirect('login');
     }
 
     /**
@@ -151,7 +151,7 @@ class BookController extends Controller
             ->with('loggedUser', $loggedUser)
             ->with('title', 'My books');;
         }
-        return redirect('home');
+        return redirect('login');
     }
 
     /**
@@ -169,7 +169,7 @@ class BookController extends Controller
             ->with('loggedUser', $loggedUser)
             ->with('title', 'Booked books');
         }
-        return redirect('home');
+        return redirect('login');
     }
 
     /**
@@ -181,7 +181,7 @@ class BookController extends Controller
               ->where('id', $bookId)
               ->update(['user_booked_id' => Auth::id()]);
         }
-        return redirect('home');
+        return redirect('login');
     }
 
     /**
@@ -194,6 +194,6 @@ class BookController extends Controller
               ->where('id', $bookId)
               ->update(['user_booked_id' => null]);
         }
-        return redirect('home');
+        return redirect('login');
     }
 }

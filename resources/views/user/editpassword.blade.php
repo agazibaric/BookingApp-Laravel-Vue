@@ -21,7 +21,7 @@
                         @csrf
                         <div class="form-group mt-4">
 
-                            <div>
+                            <div class="mb-2">
                                 <label for="book">Current password</label>
                                 <input type="password" class="form-control" name="old_password">
                                 @error('old_password')
@@ -29,7 +29,7 @@
                                 @enderror
                             </div>
 
-                            <div>
+                            <div class="mb-2">
                                 <label for="book">New password</label>
                                 <input type="password" class="form-control" name="new_password">
                                 @error('new_password')
@@ -37,7 +37,7 @@
                                 @enderror
                             </div>
 
-                            <div>
+                            <div class="mb-2">
                                 <label for="book">Re-enter password</label>
                                 <input type="password" class="form-control" name="confirm_password">
                                 @error('confirm_password')

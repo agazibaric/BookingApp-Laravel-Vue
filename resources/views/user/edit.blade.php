@@ -16,17 +16,21 @@
                     <form action="{{ route('updateUser') }}" method="POST">
                         @csrf
                         <div class="form-group mt-4">
-                            <label for="book">Name</label>
-                            <input type="text" class="form-control" name="name" value="{{ $user->name }}">
-                            @error('name')
-                            <div class="error text-danger">{{ $message }}</div>
-                            @enderror
+                            <div class="mb-2">
+                                <label for="book">Name</label>
+                                <input type="text" class="form-control" name="name" value="{{ $user->name }}">
+                                @error('name')
+                                <div class="error text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-                            <label for="book">Email</label>
-                            <input type="text" class="form-control" name="email" value="{{ $user->email }}">
-                            @error('email')
-                            <div class="error text-danger">{{ $message }}</div>
-                            @enderror
+                            <div class="mb-2">
+                                <label for="book">Email</label>
+                                <input type="text" class="form-control" name="email" value="{{ $user->email }}">
+                                @error('email')
+                                <div class="error text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
 
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
